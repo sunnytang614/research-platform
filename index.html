@@ -1,0 +1,1918 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>战略调研方法论与工具平台</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        .card-hover:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.5);
+        }
+        .modal-content {
+            background-color: #fefefe;
+            margin: 5% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 800px;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .code-block {
+            background: #1a1a2e;
+            color: #a9b1d6;
+            border-radius: 8px;
+            padding: 16px;
+            overflow-x: auto;
+            position: relative;
+        }
+        .copy-btn {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+        }
+        .tab-button {
+            padding: 12px 24px;
+            background: white;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .tab-button:hover {
+            border-color: #667eea;
+            color: #667eea;
+        }
+        .tab-button.active {
+            background: #667eea;
+            color: white;
+            border-color: #667eea;
+        }
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Modal -->
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div id="modal-body"></div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="bg-white shadow-lg sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center space-x-2">
+                    <div class="w-8 h-8 gradient-bg rounded-lg"></div>
+                    <span class="font-bold text-xl text-gray-800">战略调研平台</span>
+                </div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="#home" class="nav-active py-5 px-2 text-sm font-medium transition">首页</a>
+                    <a href="#methodology" class="text-gray-600 hover:text-gray-900 py-5 px-2 text-sm font-medium transition">方法论</a>
+                    <a href="#tools" class="text-gray-600 hover:text-gray-900 py-5 px-2 text-sm font-medium transition">工具</a>
+                    <a href="#prompts" class="text-gray-600 hover:text-gray-900 py-5 px-2 text-sm font-medium transition">提示词</a>
+                    <a href="#cases" class="text-gray-600 hover:text-gray-900 py-5 px-2 text-sm font-medium transition">案例</a>
+                </div>
+                <button class="gradient-bg text-white px-4 py-2 rounded-lg text-sm font-medium hover:opacity-90 transition" onclick="showModal('start-research')">
+                    开始调研
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="gradient-bg py-20">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <h1 class="text-4xl md:text-6xl font-bold text-white mb-6">
+                战略调研方法论与工具平台
+            </h1>
+            <p class="text-xl text-white/90 mb-8 max-w-3xl mx-auto">
+                基于VP级战略分析框架，整合调研方法、工具和提示词，帮助您高效完成业务战略调研
+            </p>
+            <div class="flex justify-center space-x-4">
+                <a href="#methodology" class="bg-white text-purple-600 px-8 py-3 rounded-lg font-medium hover:bg-gray-100 transition">
+                    浏览方法论
+                </a>
+                <a href="#tools" class="bg-transparent border-2 border-white text-white px-8 py-3 rounded-lg font-medium hover:bg-white/10 transition">
+                    查看工具
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="py-12 bg-white">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+                <div class="text-center">
+                    <div class="text-4xl font-bold text-purple-600 mb-2">6+</div>
+                    <div class="text-gray-600">核心方法论</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-4xl font-bold text-purple-600 mb-2">10+</div>
+                    <div class="text-gray-600">实用工具</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-4xl font-bold text-purple-600 mb-2">20+</div>
+                    <div class="text-gray-600">精选提示词</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-4xl font-bold text-purple-600 mb-2">100+</div>
+                    <div class="text-gray-600">调研案例</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Methodology Section -->
+    <section id="methodology" class="py-20">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">核心方法论</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">
+                    基于VP级战略分析框架，提供系统化的调研方法论
+                </p>
+            </div>
+
+            <!-- Tab Navigation -->
+            <div class="flex justify-center mb-8 space-x-4 flex-wrap">
+                <button class="tab-button active" onclick="showTab('all', 'methodology')">全部</button>
+                <button class="tab-button" onclick="showTab('competitor', 'methodology')">竞品调研</button>
+                <button class="tab-button" onclick="showTab('user', 'methodology')">用户调研</button>
+                <button class="tab-button" onclick="showTab('supply', 'methodology')">供给端调研</button>
+                <button class="tab-button" onclick="showTab('business', 'methodology')">商业模式调研</button>
+            </div>
+
+            <div id="methodology-content" class="grid md:grid-cols-2 gap-8">
+                <!-- Methodology Card 1 -->
+                <div class="methodology-card bg-white rounded-xl shadow-lg p-8 card-hover transition-all duration-300" data-category="competitor">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 gradient-bg rounded-lg flex items-center justify-center mr-4">
+                            <span class="text-white text-xl font-bold">1</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-800">竞品分析框架</h3>
+                    </div>
+                    <p class="text-gray-600 mb-4">
+                        系统化分析竞品的战略定位、商业模式、核心能力，识别差异化机会
+                    </p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="bg-purple-100 text-purple-700 px-3 py-1 rounded-full text-sm">战略定位</span>
+                        <span class="bg-purple-100 text-purple-700 px-3 py-1 rounded-full text-sm">商业模式</span>
+                        <span class="bg-purple-100 text-purple-700 px-3 py-1 rounded-full text-sm">核心能力</span>
+                    </div>
+                    <button class="w-full bg-purple-600 text-white py-2 rounded-lg text-sm font-medium hover:bg-purple-700 transition" onclick="showModal('competitor-analysis')">
+                        查看详情
+                    </button>
+                </div>
+
+                <!-- Methodology Card 2 -->
+                <div class="methodology-card bg-white rounded-xl shadow-lg p-8 card-hover transition-all duration-300" data-category="user">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 gradient-bg rounded-lg flex items-center justify-center mr-4">
+                            <span class="text-white text-xl font-bold">2</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-800">用户深度调研</h3>
+                    </div>
+                    <p class="text-gray-600 mb-4">
+                        通过定量和定性方法，深入了解用户需求、行为路径、痛点痒点
+                    </p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="bg-purple-100 text-purple-700 px-3 py-1 rounded-full text-sm">需求洞察</span>
+                        <span class="bg-purple-100 text-purple-700 px-3 py-1 rounded-full text-sm">行为分析</span>
+                        <span class="bg-purple-100 text-purple-700 px-3 py-1 rounded-full text-sm">痛点诊断</span>
+                    </div>
+                    <button class="w-full bg-purple-600 text-white py-2 rounded-lg text-sm font-medium hover:bg-purple-700 transition" onclick="showModal('user-research')">
+                        查看详情
+                    </button>
+                </div>
+
+                <!-- Methodology Card 3 -->
+                <div class="methodology-card bg-white rounded-xl shadow-lg p-8 card-hover transition-all duration-300" data-category="supply">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 gradient-bg rounded-lg flex items-center justify-center mr-4">
+                            <span class="text-white text-xl font-bold">3</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-800">供给端深度访谈</h3>
+                    </div>
+                    <p class="text-gray-600 mb-4">
+                        通过深度访谈，了解供给端的价值认知、合作痛点、改进建议
+                    </p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="bg-purple-100 text-purple-700 px-3 py-1 rounded-full text-sm">价值认知</span>
+                        <span class="bg-purple-100 text-purple-700 px-3 py-1 rounded-full text-sm">合作痛点</span>
+                        <span class="bg-purple-100 text-purple-700 px-3 py-1 rounded-full text-sm">改进建议</span>
+                    </div>
+                    <button class="w-full bg-purple-600 text-white py-2 rounded-lg text-sm font-medium hover:bg-purple-700 transition" onclick="showModal('supply-interview')">
+                        查看详情
+                    </button>
+                </div>
+
+                <!-- Methodology Card 4 -->
+                <div class="methodology-card bg-white rounded-xl shadow-lg p-8 card-hover transition-all duration-300" data-category="business">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 gradient-bg rounded-lg flex items-center justify-center mr-4">
+                            <span class="text-white text-xl font-bold">4</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-800">商业模式分析</h3>
+                    </div>
+                    <p class="text-gray-600 mb-4">
+                        深度拆解收入结构、产品化能力、ROI计算、平台与创作者分成机制
+                    </p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="bg-purple-100 text-purple-700 px-3 py-1 rounded-full text-sm">收入分析</span>
+                        <span class="bg-purple-100 text-purple-700 px-3 py-1 rounded-full text-sm">SKU标准化</span>
+                        <span class="bg-purple-100 text-purple-700 px-3 py-1 rounded-full text-sm">ROI测算</span>
+                    </div>
+                    <button class="w-full bg-purple-600 text-white py-2 rounded-lg text-sm font-medium hover:bg-purple-700 transition" onclick="showModal('business-model')">
+                        查看详情
+                    </button>
+                </div>
+
+                <!-- Methodology Card 5 -->
+                <div class="methodology-card bg-white rounded-xl shadow-lg p-8 card-hover transition-all duration-300" data-category="all">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 gradient-bg rounded-lg flex items-center justify-center mr-4">
+                            <span class="text-white text-xl font-bold">5</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-800">供给-分发-消费-转化四层分析</h3>
+                    </div>
+                    <p class="text-gray-600 mb-4">
+                        从供给侧、分发侧、用户侧、消费场景四个维度拆解业务生态，全面理解业务
+                    </p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="bg-purple-100 text-purple-700 px-3 py-1 rounded-full text-sm">生态拆解</span>
+                        <span class="bg-purple-100 text-purple-700 px-3 py-1 rounded-full text-sm">流量分析</span>
+                        <span class="bg-purple-100 text-purple-700 px-3 py-1 rounded-full text-sm">用户洞察</span>
+                    </div>
+                    <button class="w-full bg-purple-600 text-white py-2 rounded-lg text-sm font-medium hover:bg-purple-700 transition" onclick="showModal('four-layer')">
+                        查看详情
+                    </button>
+                </div>
+
+                <!-- Methodology Card 6 -->
+                <div class="methodology-card bg-white rounded-xl shadow-lg p-8 card-hover transition-all duration-300" data-category="business">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 gradient-bg rounded-lg flex items-center justify-center mr-4">
+                            <span class="text-white text-xl font-bold">6</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-800">增长飞轮与闭环分析</h3>
+                    </div>
+                    <p class="text-gray-600 mb-4">
+                        识别业务增长飞轮，分析内容生产、流量分发、变现转化的完整闭环
+                    </p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="bg-purple-100 text-purple-700 px-3 py-1 rounded-full text-sm">增长飞轮</span>
+                        <span class="bg-purple-100 text-purple-700 px-3 py-1 rounded-full text-sm">闭环验证</span>
+                        <span class="bg-purple-100 text-purple-700 px-3 py-1 rounded-full text-sm">机制拆解</span>
+                    </div>
+                    <button class="w-full bg-purple-600 text-white py-2 rounded-lg text-sm font-medium hover:bg-purple-700 transition" onclick="showModal('growth-flywheel')">
+                        查看详情
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tools Section -->
+    <section id="tools" class="py-20 bg-gray-100">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">实用工具</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">
+                    针对视频号明星业务定制的调研工具
+                </p>
+            </div>
+
+            <!-- Business Scenario Selector -->
+            <div class="bg-white rounded-xl shadow-lg p-6 mb-8">
+                <h3 class="text-lg font-bold text-gray-800 mb-4">选择您的业务场景：</h3>
+                <div class="flex space-x-4 flex-wrap">
+                    <button class="bg-purple-100 text-purple-700 px-6 py-3 rounded-lg font-medium hover:bg-purple-200 transition" onclick="filterTools('start-up')">业务启动期</button>
+                    <button class="bg-purple-100 text-purple-700 px-6 py-3 rounded-lg font-medium hover:bg-purple-200 transition" onclick="filterTools('growth')">业务成长期</button>
+                    <button class="bg-purple-100 text-purple-700 px-6 py-3 rounded-lg font-medium hover:bg-purple-200 transition" onclick="filterTools('mature')">业务成熟期</button>
+                    <button class="bg-purple-100 text-purple-700 px-6 py-3 rounded-lg font-medium hover:bg-purple-200 transition" onclick="filterTools('all')">全部</button>
+                </div>
+            </div>
+
+            <div id="tools-content" class="grid md:grid-cols-3 gap-6">
+                <!-- Tool Card 1 -->
+                <div class="bg-white rounded-xl shadow-lg p-6 card-hover transition-all duration-300 tool-card" data-scenario="start-up">
+                    <div class="flex items-center mb-4">
+                        <div class="w-10 h-10 bg-purple-600 rounded-lg flex items-center justify-center mr-3">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-lg font-bold text-gray-800">视频号竞品分析框架</h3>
+                    </div>
+                    <p class="text-gray-600 text-sm mb-4">
+                        专门针对抖音、小红书、Instagram的明星业务进行竞品分析
+                    </p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="bg-gray-100 text-gray-600 px-2 py-1 rounded text-xs">启动期</span>
+                        <span class="bg-gray-100 text-gray-600 px-2 py-1 rounded text-xs">竞品分析</span>
+                    </div>
+                    <button class="w-full bg-purple-600 text-white py-2 rounded-lg text-sm font-medium hover:bg-purple-700 transition" onclick="showModal('video-competitor-analysis')">
+                        使用工具
+                    </button>
+                </div>
+
+                <!-- Tool Card 2 -->
+                <div class="bg-white rounded-xl shadow-lg p-6 card-hover transition-all duration-300 tool-card" data-scenario="growth">
+                    <div class="flex items-center mb-4">
+                        <div class="w-10 h-10 bg-purple-600 rounded-lg flex items-center justify-center mr-3">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-lg font-bold text-gray-800">明星访谈提纲生成器</h3>
+                    </div>
+                    <p class="text-gray-600 text-sm mb-4">
+                        根据调研目标自动生成明星深度访谈提纲，覆盖认知、痛点、建议等维度
+                    </p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="bg-gray-100 text-gray-600 px-2 py-1 rounded text-xs">成长期</span>
+                        <span class="bg-gray-100 text-gray-600 px-2 py-1 rounded text-xs">供给端访谈</span>
+                    </div>
+                    <button class="w-full bg-purple-600 text-white py-2 rounded-lg text-sm font-medium hover:bg-purple-700 transition" onclick="showModal('star-interview-generator')">
+                        使用工具
+                    </button>
+                </div>
+
+                <!-- Tool Card 3 -->
+                <div class="bg-white rounded-xl shadow-lg p-6 card-hover transition-all duration-300 tool-card" data-scenario="start-up">
+                    <div class="flex items-center mb-4">
+                        <div class="w-10 h-10 bg-purple-600 rounded-lg flex items-center justify-center mr-3">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-lg font-bold text-gray-800">视频号数据指标体系</h3>
+                    </div>
+                    <p class="text-gray-600 text-sm mb-4">
+                        完整的视频号明星业务数据指标体系，涵盖流量、内容、商业化、社交裂变
+                    </p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="bg-gray-100 text-gray-600 px-2 py-1 rounded text-xs">启动期</span>
+                        <span class="bg-gray-100 text-gray-600 px-2 py-1 rounded text-xs">数据指标</span>
+                    </div>
+                    <button class="w-full bg-purple-600 text-white py-2 rounded-lg text-sm font-medium hover:bg-purple-700 transition" onclick="showModal('video-metrics')">
+                        使用工具
+                    </button>
+                </div>
+
+                <!-- Tool Card 4 -->
+                <div class="bg-white rounded-xl shadow-lg p-6 card-hover transition-all duration-300 tool-card" data-scenario="growth">
+                    <div class="flex items-center mb-4">
+                        <div class="w-10 h-10 bg-purple-600 rounded-lg flex items-center justify-center mr-3">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-lg font-bold text-gray-800">视频号SWOT分析器</h3>
+                    </div>
+                    <p class="text-gray-600 text-sm mb-4">
+                        系统化分析视频号明星业务的优势、劣势、机会、威胁，输出战略建议
+                    </p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="bg-gray-100 text-gray-600 px-2 py-1 rounded text-xs">成长期</span>
+                        <span class="bg-gray-100 text-gray-600 px-2 py-1 rounded text-xs">SWOT分析</span>
+                    </div>
+                    <button class="w-full bg-purple-600 text-white py-2 rounded-lg text-sm font-medium hover:bg-purple-700 transition" onclick="showModal('video-swot')">
+                        使用工具
+                    </button>
+                </div>
+
+                <!-- Tool Card 5 -->
+                <div class="bg-white rounded-xl shadow-lg p-6 card-hover transition-all duration-300 tool-card" data-scenario="mature">
+                    <div class="flex items-center mb-4">
+                        <div class="w-10 h-10 bg-purple-600 rounded-lg flex items-center justify-center mr-3">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-lg font-bold text-gray-800">星舟计划ROI计算器</h3>
+                    </div>
+                    <p class="text-gray-600 text-sm mb-4">
+                        快速计算星舟计划不同合作模式的ROI和投资回报周期，辅助决策
+                    </p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="bg-gray-100 text-gray-600 px-2 py-1 rounded text-xs">成熟期</span>
+                        <span class="bg-gray-100 text-gray-600 px-2 py-1 rounded text-xs">ROI计算</span>
+                    </div>
+                    <button class="w-full bg-purple-600 text-white py-2 rounded-lg text-sm font-medium hover:bg-purple-700 transition" onclick="showModal('xingzhou-roi')">
+                        使用工具
+                    </button>
+                </div>
+
+                <!-- Tool Card 6 -->
+                <div class="bg-white rounded-xl shadow-lg p-6 card-hover transition-all duration-300 tool-card" data-scenario="start-up">
+                    <div class="flex items-center mb-4">
+                        <div class="w-10 h-10 bg-purple-600 rounded-lg flex items-center justify-center mr-3">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-lg font-bold text-gray-800">调研报告框架生成器</h3>
+                    </div>
+                    <p class="text-gray-600 text-sm mb-4">
+                        根据调研类型自动生成报告框架，包括章节、核心问题、数据指标
+                    </p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="bg-gray-100 text-gray-600 px-2 py-1 rounded text-xs">启动期</span>
+                        <span class="bg-gray-100 text-gray-600 px-2 py-1 rounded text-xs">报告框架</span>
+                    </div>
+                    <button class="w-full bg-purple-600 text-white py-2 rounded-lg text-sm font-medium hover:bg-purple-700 transition" onclick="showModal('report-framework')">
+                        使用工具
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Prompts Section -->
+    <section id="prompts" class="py-20">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">精选提示词</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">
+                    基于视频号明星业务调研总结的提示词，帮助AI生成高质量内容
+                </p>
+            </div>
+
+            <!-- Prompt Category Selector -->
+            <div class="flex justify-center mb-8 space-x-4 flex-wrap">
+                <button class="bg-purple-100 text-purple-700 px-6 py-3 rounded-lg font-medium hover:bg-purple-200 transition" onclick="filterPrompts('basic')">基础调研</button>
+                <button class="bg-purple-100 text-purple-700 px-6 py-3 rounded-lg font-medium hover:bg-purple-200 transition" onclick="filterPrompts('report')">报告生成</button>
+                <button class="bg-purple-100 text-purple-700 px-6 py-3 rounded-lg font-medium hover:bg-purple-200 transition" onclick="filterPrompts('tool')">工具使用</button>
+                <button class="bg-purple-100 text-purple-700 px-6 py-3 rounded-lg font-medium hover:bg-purple-200 transition" onclick="filterPrompts('scenario')">特定场景</button>
+            </div>
+
+            <div id="prompts-content" class="space-y-6">
+                <!-- Prompt Card 1 -->
+                <div class="bg-white rounded-xl shadow-lg p-6 prompt-card" data-category="basic">
+                    <div class="flex justify-between items-start mb-4">
+                        <div>
+                            <h3 class="text-lg font-bold text-gray-800">【基础调研】视频号竞品深度分析提示词</h3>
+                            <p class="text-gray-600 text-sm mt-2">
+                                用于生成VP级竞品分析报告，专门针对视频号明星业务
+                            </p>
+                        </div>
+                        <button onclick="copyPrompt(this)" class="bg-purple-100 text-purple-700 px-4 py-2 rounded-lg text-sm font-medium hover:bg-purple-200 transition">
+                            复制
+                        </button>
+                    </div>
+                    <div class="code-block relative">
+                        <button class="copy-btn bg-gray-700 text-white px-3 py-1 rounded text-xs hover:bg-gray-600 transition" onclick="copyCode(this)">
+                            复制代码
+                        </button>
+                        <pre class="text-sm"><code>你是一名顶级互联网公司战略分析负责人 + McKinsey咨询顾问。
+请针对【视频号明星业务】的竞品（抖音、小红书、Instagram），输出一份"战略级竞品分析报告"。
+
+【一、执行摘要】
+- 用3-5条核心结论总结本报告
+- 每条必须是"判断 + 依据 + 含义"
+
+【二、竞品战略定位分析】
+1. 抖音明星业务的战略定位：为电商服务的流量引擎
+2. 小红书明星业务的战略定位：为品牌转化服务的种草平台
+3. Instagram明星业务的战略定位：视觉影响力交易市场
+4. 视频号明星业务应该如何定位？
+
+【三、竞品商业模式分析】
+1. 收入结构对比（广告、电商、订阅、分成）
+2. 产品化能力对比（SKU标准化程度）
+3. ROI与数据能力对比
+4. 平台与创作者分成机制对比
+
+【四、核心能力对比】
+1. 供给控制能力对比
+2. 分发能力对比（算法推荐、社交裂变、搜索）
+3. 数据能力对比
+4. 商业基础设施对比
+5. 用户心智对比
+
+【五、差异化定位建议】
+1. 视频号的核心优势是什么？
+2. 视频号应该如何与竞品差异化？
+3. 短期、中期、长期战略建议是什么？
+
+输出要求：
+- 使用表格进行对比分析
+- 每个观点必须有数据支撑
+- 结论先行，不要废话
+- 适合直接用于高管汇报</code></pre>
+                    </div>
+                </div>
+
+                <!-- Prompt Card 2 -->
+                <div class="bg-white rounded-xl shadow-lg p-6 prompt-card" data-category="basic">
+                    <div class="flex justify-between items-start mb-4">
+                        <div>
+                            <h3 class="text-lg font-bold text-gray-800">【基础调研】明星深度访谈提纲提示词</h3>
+                            <p class="text-gray-600 text-sm mt-2">
+                                用于生成明星深度访谈提纲，了解艺人对线上价值的认知、合作痛点、改进建议
+                            </p>
+                        </div>
+                        <button onclick="copyPrompt(this)" class="bg-purple-100 text-purple-700 px-4 py-2 rounded-lg text-sm font-medium hover:bg-purple-200 transition">
+                            复制
+                        </button>
+                    </div>
+                    <div class="code-block relative">
+                        <button class="copy-btn bg-gray-700 text-white px-3 py-1 rounded text-xs hover:bg-gray-600 transition" onclick="copyCode(this)">
+                            复制代码
+                        </button>
+                        <pre class="text-sm"><code>请为【{艺人名称}】生成一份深度访谈提纲，访谈时长60分钟。
+
+访谈目标：
+1. 了解艺人对线上价值的认知
+2. 了解艺人与视频号合作的痛点
+3. 了解艺人对改进的建议
+
+访谈问题框架：
+【第一部分：背景与认知】(15分钟)
+1. 请简单介绍一下您的演艺生涯和主要成就
+2. 您对线上娱乐的初步印象是什么？
+3. 您认为线上娱乐对艺人的价值是什么？
+4. 您之前有没有在线上举办过活动？体验如何？
+
+【第二部分：合作体验】(20分钟)
+5. 您与视频号合作的体验如何？
+6. 合作过程中遇到的最大挑战是什么？
+7. 您认为合作模式有什么可以改进的地方？
+8. 您对合作收益满意吗？为什么？
+
+【第三部分：价值认知】(15分钟)
+9. 您认为线上活动与线下活动的价值对比如何？
+10. 您对线上收入的期望是多少？
+11. 您愿意与平台建立长期合作吗？为什么？
+12. 您认为什么样的合作模式是理想的？
+
+【第四部分：改进建议】(10分钟)
+13. 您对平台有什么改进建议？
+14. 您希望平台提供什么支持？
+15. 您对未来的合作有什么期待？
+
+访谈注意事项：
+- 创造轻松的访谈氛围
+- 深入挖掘背后的原因
+- 鼓励艺人分享真实想法
+- 做好访谈记录</code></pre>
+                    </div>
+                </div>
+
+                <!-- Prompt Card 3 -->
+                <div class="bg-white rounded-xl shadow-lg p-6 prompt-card" data-category="basic">
+                    <div class="flex justify-between items-start mb-4">
+                        <div>
+                            <h3 class="text-lg font-bold text-gray-800">【基础调研】视频号数据指标体系提示词</h3>
+                            <p class="text-gray-600 text-sm mt-2">
+                                用于生成完整的视频号明星业务数据指标体系
+                            </p>
+                        </div>
+                        <button onclick="copyPrompt(this)" class="bg-purple-100 text-purple-700 px-4 py-2 rounded-lg text-sm font-medium hover:bg-purple-200 transition">
+                            复制
+                        </button>
+                    </div>
+                    <div class="code-block relative">
+                        <button class="copy-btn bg-gray-700 text-white px-3 py-1 rounded text-xs hover:bg-gray-600 transition" onclick="copyCode(this)">
+                            复制代码
+                        </button>
+                        <pre class="text-sm"><code>请为【视频号明星业务】生成完整的业务数据指标体系。
+
+【流量指标】
+- DAU（日活跃用户数）
+- MAU（月活跃用户数）
+- 日均使用时长
+- 留存率（次日/7日/30日）
+
+【内容指标】
+- 明星数量
+- 合作次数
+- 内容数量
+- 内容质量评分
+
+【商业化指标】
+- GMV（交易总额）
+- 客单价
+- 转化率
+- 客户数量
+- 复购率
+
+【社交裂变指标】
+- 分享率
+- 裂变系数
+- 朋友圈曝光量
+- 话题讨论量
+
+【用户满意度指标】
+- NPS（净推荐值）
+- 用户满意度
+- 用户投诉率
+- 用户流失率
+
+请为每个指标说明：
+1. 指标定义
+2. 计算方法
+3. 目标值（3个月、6个月、12个月）
+4. 监控频率（日/周/月）
+5. 责任人</code></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Cases Section -->
+    <section id="cases" class="py-20 bg-gray-100">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">调研案例</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">
+                    真实的视频号明星业务调研案例，展示方法论和工具的实际应用
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-8">
+                <!-- Case Card 1 -->
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden card-hover transition-all duration-300">
+                    <div class="h-48 gradient-bg"></div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">视频号明星业务战略调研</h3>
+                        <p class="text-gray-600 text-sm mb-4">
+                            通过竞品分析、供给端访谈、数据对齐，明确视频号明星业务应该聚焦"大事件+社交裂变+品牌心智"
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="bg-gray-100 text-gray-600 px-2 py-1 rounded text-xs">竞品分析</span>
+                            <span class="bg-gray-100 text-gray-600 px-2 py-1 rounded text-xs">供给端访谈</span>
+                            <span class="bg-gray-100 text-gray-600 px-2 py-1 rounded text-xs">战略定位</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center text-sm text-gray-500">
+                                <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                                </svg>
+                                2024年3月
+                            </div>
+                            <button class="text-purple-600 text-sm font-medium hover:text-purple-700 transition" onclick="showModal('video-case')">
+                                查看详情 →
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Case Card 2 -->
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden card-hover transition-all duration-300">
+                    <div class="h-48 bg-gradient-to-r from-pink-500 to-rose-500"></div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">Instagram明星业务深度分析</h3>
+                        <p class="text-gray-600 text-sm mb-4">
+                            从战略定位、商业模式、核心能力、竞争壁垒四维分析Instagram明星业务，输出战略级报告
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="bg-gray-100 text-gray-600 px-2 py-1 rounded text-xs">战略定位</span>
+                            <span class="bg-gray-100 text-gray-600 px-2 py-1 rounded text-xs">商业模式</span>
+                            <span class="bg-gray-100 text-gray-600 px-2 py-1 rounded text-xs">竞争壁垒</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center text-sm text-gray-500">
+                                <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                                </svg>
+                                2024年3月
+                            </div>
+                            <button class="text-purple-600 text-sm font-medium hover:text-purple-700 transition" onclick="showModal('instagram-case')">
+                                查看详情 →
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="grid md:grid-cols-4 gap-8 mb-8">
+                <div>
+                    <div class="flex items-center space-x-2 mb-4">
+                        <div class="w-8 h-8 gradient-bg rounded-lg"></div>
+                        <span class="font-bold text-lg">战略调研平台</span>
+                    </div>
+                    <p class="text-gray-400 text-sm">
+                        基于VP级战略分析框架，整合调研方法、工具和提示词
+                    </p>
+                </div>
+                <div>
+                    <h4 class="font-bold mb-4">方法论</h4>
+                    <ul class="space-y-2 text-gray-400 text-sm">
+                        <li><a href="#methodology" class="hover:text-white transition">竞品分析</a></li>
+                        <li><a href="#methodology" class="hover:text-white transition">用户调研</a></li>
+                        <li><a href="#methodology" class="hover:text-white transition">供给端访谈</a></li>
+                        <li><a href="#methodology" class="hover:text-white transition">商业模式分析</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold mb-4">工具</h4>
+                    <ul class="space-y-2 text-gray-400 text-sm">
+                        <li><a href="#tools" class="hover:text-white transition">竞品分析框架</a></li>
+                        <li><a href="#tools" class="hover:text-white transition">访谈提纲生成器</a></li>
+                        <li><a href="#tools" class="hover:text-white transition">数据指标体系</a></li>
+                        <li><a href="#tools" class="hover:text-white transition">SWOT分析器</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold mb-4">联系我们</h4>
+                    <ul class="space-y-2 text-gray-400 text-sm">
+                        <li>Email: contact@example.com</li>
+                        <li>微信: example123</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 pt-8 text-center text-gray-400 text-sm">
+                © 2024 战略调研平台. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Modal content
+        const modalContent = {
+            'start-research': `
+                <h2 class="text-2xl font-bold text-gray-800 mb-4">开始调研</h2>
+                <div class="space-y-4">
+                    <div class="bg-purple-50 p-4 rounded-lg">
+                        <h3 class="font-bold text-purple-700 mb-2">第一步：选择调研类型</h3>
+                        <p class="text-gray-600 text-sm">从竞品调研、用户调研、供给端调研、商业模式调研中选择</p>
+                    </div>
+                    <div class="bg-blue-50 p-4 rounded-lg">
+                        <h3 class="font-bold text-blue-700 mb-2">第二步：选择业务场景</h3>
+                        <p class="text-gray-600 text-sm">从业务启动期、成长期、成熟期中选择</p>
+                    </div>
+                    <div class="bg-green-50 p-4 rounded-lg">
+                        <h3 class="font-bold text-green-700 mb-2">第三步：使用推荐工具和提示词</h3>
+                        <p class="text-gray-600 text-sm">根据您的选择，我们会推荐合适的工具和提示词</p>
+                    </div>
+                </div>
+            `,
+            'competitor-analysis': `
+                <div class="border-b-2 border-purple-600 pb-4 mb-6">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-2">竞品分析框架</h2>
+                    <p class="text-purple-600 font-medium">理解竞品的战略定位、商业模式、核心能力，找到差异化机会</p>
+                </div>
+                
+                <div class="space-y-6">
+                    <div>
+                        <h3 class="font-bold text-gray-800 mb-3 flex items-center">
+                            <span class="bg-purple-600 text-white rounded-full w-7 h-7 flex items-center justify-center text-sm font-bold mr-2">1</span>
+                            核心概念
+                        </h3>
+                        <p class="text-gray-600 pl-9">系统化分析竞品，不是为了抄袭，而是为了找到自己的差异化定位和竞争机会。</p>
+                    </div>
+                    
+                    <div>
+                        <h3 class="font-bold text-gray-800 mb-3 flex items-center">
+                            <span class="bg-purple-600 text-white rounded-full w-7 h-7 flex items-center justify-center text-sm font-bold mr-2">2</span>
+                            解决什么问题
+                        </h3>
+                        <div class="pl-9 space-y-2">
+                            <div class="flex items-start">
+                                <span class="text-purple-600 mr-2">🎯</span>
+                                <p class="text-gray-600"><strong class="text-gray-800">战略不清晰：</strong>不知道自己的业务应该如何定位，跟抖音、小红书差异化在哪里</p>
+                            </div>
+                            <div class="flex items-start">
+                                <span class="text-purple-600 mr-2">💡</span>
+                                <p class="text-gray-600"><strong class="text-gray-800">找不到机会：</strong>竞品都做大了，不知道自己还能做什么</p>
+                            </div>
+                            <div class="flex items-start">
+                                <span class="text-purple-600 mr-2">📊</span>
+                                <p class="text-gray-600"><strong class="text-gray-800">缺乏决策依据：</strong>拍脑袋做决策，没有系统性的分析框架</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h3 class="font-bold text-gray-800 mb-3 flex items-center">
+                            <span class="bg-purple-600 text-white rounded-full w-7 h-7 flex items-center justify-center text-sm font-bold mr-2">3</span>
+                            业务价值
+                        </h3>
+                        <div class="pl-9 bg-purple-50 p-4 rounded-lg">
+                            <div class="space-y-2">
+                                <p class="text-gray-600"><strong class="text-purple-700">避免同质化竞争：</strong>找到竞品未覆盖的蓝海市场</p>
+                                <p class="text-gray-600"><strong class="text-purple-700">加速战略决策：</strong>用结构化框架替代拍脑袋</p>
+                                <p class="text-gray-600"><strong class="text-purple-700">降低试错成本：</strong>学习竞品的成功经验和失败教训</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h3 class="font-bold text-gray-800 mb-3 flex items-center">
+                            <span class="bg-purple-600 text-white rounded-full w-7 h-7 flex items-center justify-center text-sm font-bold mr-2">4</span>
+                            适用场景
+                        </h3>
+                        <div class="pl-9 grid grid-cols-2 gap-3">
+                            <div class="bg-gray-50 p-3 rounded-lg">
+                                <p class="font-medium text-gray-800 text-sm">业务启动期</p>
+                                <p class="text-gray-500 text-xs">明确战略定位</p>
+                            </div>
+                            <div class="bg-gray-50 p-3 rounded-lg">
+                                <p class="font-medium text-gray-800 text-sm">新业务规划</p>
+                                <p class="text-gray-500 text-xs">学习竞品经验</p>
+                            </div>
+                            <div class="bg-gray-50 p-3 rounded-lg">
+                                <p class="font-medium text-gray-800 text-sm">竞品策略调整</p>
+                                <p class="text-gray-500 text-xs">了解竞品动向</p>
+                            </div>
+                            <div class="bg-gray-50 p-3 rounded-lg">
+                                <p class="font-medium text-gray-800 text-sm">战略决策支持</p>
+                                <p class="text-gray-500 text-xs">为高管提供依据</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-blue-50 p-4 rounded-lg">
+                        <h3 class="font-bold text-blue-700 mb-2">💡 核心洞察</h3>
+                        <p class="text-gray-600">竞品分析的核心不是"分析别人做了什么"，而是"找到别人没做的机会"。成功的竞品分析应该让你看到别人看不到的蓝海。</p>
+                    </div>
+                </div>
+            `,
+            'user-research': `
+                <div class="border-b-2 border-purple-600 pb-4 mb-6">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-2">用户深度调研</h2>
+                    <p class="text-purple-600 font-medium">深入了解用户需求、行为路径、痛点痒点，指导产品迭代</p>
+                </div>
+                
+                <div class="space-y-6">
+                    <div>
+                        <h3 class="font-bold text-gray-800 mb-3 flex items-center">
+                            <span class="bg-purple-600 text-white rounded-full w-7 h-7 flex items-center justify-center text-sm font-bold mr-2">1</span>
+                            核心概念
+                        </h3>
+                        <p class="text-gray-600 pl-9">用户调研的核心不是"问用户想要什么"，而是"观察用户做了什么"，并深挖"为什么"。</p>
+                    </div>
+                    
+                    <div>
+                        <h3 class="font-bold text-gray-800 mb-3 flex items-center">
+                            <span class="bg-purple-600 text-white rounded-full w-7 h-7 flex items-center justify-center text-sm font-bold mr-2">2</span>
+                            解决什么问题
+                        </h3>
+                        <div class="pl-9 space-y-2">
+                            <div class="flex items-start">
+                                <span class="text-purple-600 mr-2">🎯</span>
+                                <p class="text-gray-600"><strong class="text-gray-800">需求不清晰：</strong>不知道用户真正想要什么，只能靠猜</p>
+                            </div>
+                            <div class="flex items-start">
+                                <span class="text-purple-600 mr-2">💡</span>
+                                <p class="text-gray-600"><strong class="text-gray-800">痛点不明确：</strong>知道有问题，但不知道具体是什么</p>
+                            </div>
+                            <div class="flex items-start">
+                                <span class="text-purple-600 mr-2">📊</span>
+                                <p class="text-gray-600"><strong class="text-gray-800">决策缺乏依据：</strong>产品决策拍脑袋，没有用户洞察</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h3 class="font-bold text-gray-800 mb-3 flex items-center">
+                            <span class="bg-purple-600 text-white rounded-full w-7 h-7 flex items-center justify-center text-sm font-bold mr-2">3</span>
+                            业务价值
+                        </h3>
+                        <div class="pl-9 bg-purple-50 p-4 rounded-lg">
+                            <div class="space-y-2">
+                                <p class="text-gray-600"><strong class="text-purple-700">提升产品成功率：</strong>基于真实需求做产品，而不是拍脑袋</p>
+                                <p class="text-gray-600"><strong class="text-purple-700">优化用户体验：</strong>找到并解决用户痛点</p>
+                                <p class="text-gray-600"><strong class="text-purple-700">降低试错成本：</strong>在开发前验证假设，避免浪费资源</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h3 class="font-bold text-gray-800 mb-3 flex items-center">
+                            <span class="bg-purple-600 text-white rounded-full w-7 h-7 flex items-center justify-center text-sm font-bold mr-2">4</span>
+                            适用场景
+                        </h3>
+                        <div class="pl-9 grid grid-cols-2 gap-3">
+                            <div class="bg-gray-50 p-3 rounded-lg">
+                                <p class="font-medium text-gray-800 text-sm">业务成长期</p>
+                                <p class="text-gray-500 text-xs">了解真实需求</p>
+                            </div>
+                            <div class="bg-gray-50 p-3 rounded-lg">
+                                <p class="font-medium text-gray-800 text-sm">产品迭代</p>
+                                <p class="text-gray-500 text-xs">验证功能方向</p>
+                            </div>
+                            <div class="bg-gray-50 p-3 rounded-lg">
+                                <p class="font-medium text-gray-800 text-sm">用户增长</p>
+                                <p class="text-gray-500 text-xs">找到增长驱动因素</p>
+                            </div>
+                            <div class="bg-gray-50 p-3 rounded-lg">
+                                <p class="font-medium text-gray-800 text-sm">体验优化</p>
+                                <p class="text-gray-500 text-xs">提升满意度和留存</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-blue-50 p-4 rounded-lg">
+                        <h3 class="font-bold text-blue-700 mb-2">💡 核心洞察</h3>
+                        <p class="text-gray-600">用户调研的黄金法则：不要问用户"你想要什么"，要观察用户"做了什么"，然后深挖"为什么"。用户说的和做的往往是两回事。</p>
+                    </div>
+                </div>
+            `,
+            'supply-interview': `
+                <div class="border-b-2 border-purple-600 pb-4 mb-6">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-2">供给端深度访谈</h2>
+                    <p class="text-purple-600 font-medium">了解供给端（艺人/机构）的价值认知、合作痛点、改进建议</p>
+                </div>
+                
+                <div class="space-y-6">
+                    <div>
+                        <h3 class="font-bold text-gray-800 mb-3 flex items-center">
+                            <span class="bg-purple-600 text-white rounded-full w-7 h-7 flex items-center justify-center text-sm font-bold mr-2">1</span>
+                            核心概念
+                        </h3>
+                        <p class="text-gray-600 pl-9">供给端访谈的核心不是"问供给端想要什么"，而是"理解供给端的底层逻辑和真实痛点"，找到长期合作的共赢点。</p>
+                    </div>
+                    
+                    <div>
+                        <h3 class="font-bold text-gray-800 mb-3 flex items-center">
+                            <span class="bg-purple-600 text-white rounded-full w-7 h-7 flex items-center justify-center text-sm font-bold mr-2">2</span>
+                            解决什么问题
+                        </h3>
+                        <div class="pl-9 space-y-2">
+                            <div class="flex items-start">
+                                <span class="text-purple-600 mr-2">🎯</span>
+                                <p class="text-gray-600"><strong class="text-gray-800">供给端不配合：</strong>艺人对线上价值认知不清晰，不愿意合作</p>
+                            </div>
+                            <div class="flex items-start">
+                                <span class="text-purple-600 mr-2">💡</span>
+                                <p class="text-gray-600"><strong class="text-gray-800">合作体验差：</strong>合作流程复杂、分成不合理、支持不到位</p>
+                            </div>
+                            <div class="flex items-start">
+                                <span class="text-purple-600 mr-2">📊</span>
+                                <p class="text-gray-600"><strong class="text-gray-800">合作不稳定：</strong>一次合作就走，无法形成长期合作</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h3 class="font-bold text-gray-800 mb-3 flex items-center">
+                            <span class="bg-purple-600 text-white rounded-full w-7 h-7 flex items-center justify-center text-sm font-bold mr-2">3</span>
+                            业务价值
+                        </h3>
+                        <div class="pl-9 bg-purple-50 p-4 rounded-lg">
+                            <div class="space-y-2">
+                                <p class="text-gray-600"><strong class="text-purple-700">建立长期合作：</strong>从"一次交易"变成"长期合伙"</p>
+                                <p class="text-gray-600"><strong class="text-purple-700">优化合作模式：</strong>设计更符合供给端需求的合作模式</p>
+                                <p class="text-gray-600"><strong class="text-purple-700">提升合作体验：</strong>解决供给端的痛点，提升满意度</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h3 class="font-bold text-gray-800 mb-3 flex items-center">
+                            <span class="bg-purple-600 text-white rounded-full w-7 h-7 flex items-center justify-center text-sm font-bold mr-2">4</span>
+                            适用场景
+                        </h3>
+                        <div class="pl-9 grid grid-cols-2 gap-3">
+                            <div class="bg-gray-50 p-3 rounded-lg">
+                                <p class="font-medium text-gray-800 text-sm">业务成长期</p>
+                                <p class="text-gray-500 text-xs">了解真实诉求</p>
+                            </div>
+                            <div class="bg-gray-50 p-3 rounded-lg">
+                                <p class="font-medium text-gray-800 text-sm">合作模式优化</p>
+                                <p class="text-gray-500 text-xs">改进现有模式</p>
+                            </div>
+                            <div class="bg-gray-50 p-3 rounded-lg">
+                                <p class="font-medium text-gray-800 text-sm">策略调整</p>
+                                <p class="text-gray-500 text-xs">制定供给端策略</p>
+                            </div>
+                            <div class="bg-gray-50 p-3 rounded-lg">
+                                <p class="font-medium text-gray-800 text-sm">分成机制设计</p>
+                                <p class="text-gray-500 text-xs">设计激励机制</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-blue-50 p-4 rounded-lg">
+                        <h3 class="font-bold text-blue-700 mb-2">💡 核心洞察</h3>
+                        <p class="text-gray-600">供给端访谈的关键不是"听取抱怨"，而是"找到共赢点"。艺人和平台不是零和博弈，而是长期合伙。只有利益绑定，才能稳定合作。</p>
+                    </div>
+                </div>
+            `,
+            'business-model': `
+                <div class="border-b-2 border-purple-600 pb-4 mb-6">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-2">商业模式分析</h2>
+                    <p class="text-purple-600 font-medium">深度拆解收入结构、产品化能力、ROI计算、分成机制</p>
+                </div>
+                
+                <div class="space-y-6">
+                    <div>
+                        <h3 class="font-bold text-gray-800 mb-3 flex items-center">
+                            <span class="bg-purple-600 text-white rounded-full w-7 h-7 flex items-center justify-center text-sm font-bold mr-2">1</span>
+                            核心概念
+                        </h3>
+                        <p class="text-gray-600 pl-9">商业模式分析的核心不是"算账"，而是"如何把非标的内容/人标准化为可交易的商业组件（SKU）"。</p>
+                    </div>
+                    
+                    <div>
+                        <h3 class="font-bold text-gray-800 mb-3 flex items-center">
+                            <span class="bg-purple-600 text-white rounded-full w-7 h-7 flex items-center justify-center text-sm font-bold mr-2">2</span>
+                            解决什么问题
+                        </h3>
+                        <div class="pl-9 space-y-2">
+                            <div class="flex items-start">
+                                <span class="text-purple-600 mr-2">🎯</span>
+                                <p class="text-gray-600"><strong class="text-gray-800">变现不清晰：</strong>不知道怎么赚钱，商业模式不清晰</p>
+                            </div>
+                            <div class="flex items-start">
+                                <span class="text-purple-600 mr-2">💡</span>
+                                <p class="text-gray-600"><strong class="text-gray-800">产品化能力弱：</strong>非标内容无法标准化，客户投不起</p>
+                            </div>
+                            <div class="flex items-start">
+                                <span class="text-purple-600 mr-2">📊</span>
+                                <p class="text-gray-600"><strong class="text-gray-800">ROI算不平：</strong>投入产出不匹配，商业模式不可持续</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h3 class="font-bold text-gray-800 mb-3 flex items-center">
+                            <span class="bg-purple-600 text-white rounded-full w-7 h-7 flex items-center justify-center text-sm font-bold mr-2">3</span>
+                            业务价值
+                        </h3>
+                        <div class="pl-9 bg-purple-50 p-4 rounded-lg">
+                            <div class="space-y-2">
+                                <p class="text-gray-600"><strong class="text-purple-700">提升变现能力：</strong>设计可持续的商业模式</p>
+                                <p class="text-gray-600"><strong class="text-purple-700">扩大客户覆盖：</strong>通过产品化覆盖更多客户</p>
+                                <p class="text-gray-600"><strong class="text-purple-700">平衡利益分配：</strong>设计合理的分成机制</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h3 class="font-bold text-gray-800 mb-3 flex items-center">
+                            <span class="bg-purple-600 text-white rounded-full w-7 h-7 flex items-center justify-center text-sm font-bold mr-2">4</span>
+                            适用场景
+                        </h3>
+                        <div class="pl-9 grid grid-cols-2 gap-3">
+                            <div class="bg-gray-50 p-3 rounded-lg">
+                                <p class="font-medium text-gray-800 text-sm">业务成熟期</p>
+                                <p class="text-gray-500 text-xs">优化商业模式</p>
+                            </div>
+                            <div class="bg-gray-50 p-3 rounded-lg">
+                                <p class="font-medium text-gray-800 text-sm">产品设计</p>
+                                <p class="text-gray-500 text-xs">设计商业产品</p>
+                            </div>
+                            <div class="bg-gray-50 p-3 rounded-lg">
+                                <p class="font-medium text-gray-800 text-sm">ROI计算</p>
+                                <p class="text-gray-500 text-xs">评估投资回报</p>
+                            </div>
+                            <div class="bg-gray-50 p-3 rounded-lg">
+                                <p class="font-medium text-gray-800 text-sm">分成机制设计</p>
+                                <p class="text-gray-500 text-xs">设计激励机制</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-blue-50 p-4 rounded-lg">
+                        <h3 class="font-bold text-blue-700 mb-2">💡 核心洞察</h3>
+                        <p class="text-gray-600">商业模式的核心是"标准化"。把非标的"人/内容"标准化为"可交易的商业组件（SKU）"，才能规模化变现。</p>
+                    </div>
+                </div>
+            `,
+            'four-layer': `
+                <div class="border-b-2 border-purple-600 pb-4 mb-6">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-2">供给-分发-消费-转化四层分析</h2>
+                    <p class="text-purple-600 font-medium">从供给、分发、用户、消费四层拆解业务生态，全面理解业务</p>
+                </div>
+                
+                <div class="space-y-6">
+                    <div>
+                        <h3 class="font-bold text-gray-800 mb-3 flex items-center">
+                            <span class="bg-purple-600 text-white rounded-full w-7 h-7 flex items-center justify-center text-sm font-bold mr-2">1</span>
+                            核心概念
+                        </h3>
+                        <p class="text-gray-600 pl-9">业务生态的四个核心环节：供给侧（谁生产）→ 分发侧（如何分发）→ 用户侧（谁来消费）→ 消费场景（消费什么）。四层相互关联，缺一不可。</p>
+                    </div>
+                    
+                    <div>
+                        <h3 class="font-bold text-gray-800 mb-3 flex items-center">
+                            <span class="bg-purple-600 text-white rounded-full w-7 h-7 flex items-center justify-center text-sm font-bold mr-2">2</span>
+                            解决什么问题
+                        </h3>
+                        <div class="pl-9 space-y-2">
+                            <div class="flex items-start">
+                                <span class="text-purple-600 mr-2">🎯</span>
+                                <p class="text-gray-600"><strong class="text-gray-800">业务不清晰：</strong>不知道业务的核心环节是什么</p>
+                            </div>
+                            <div class="flex items-start">
+                                <span class="text-purple-600 mr-2">💡</span>
+                                <p class="text-gray-600"><strong class="text-gray-800">问题找不到根源：</strong>知道有问题，但不知道在哪里</p>
+                            </div>
+                            <div class="flex items-start">
+                                <span class="text-purple-600 mr-2">📊</span>
+                                <p class="text-gray-600"><strong class="text-gray-800">决策缺乏依据：</strong>拍脑袋做决策，没有系统性分析</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h3 class="font-bold text-gray-800 mb-3 flex items-center">
+                            <span class="bg-purple-600 text-white rounded-full w-7 h-7 flex items-center justify-center text-sm font-bold mr-2">3</span>
+                            业务价值
+                        </h3>
+                        <div class="pl-9 bg-purple-50 p-4 rounded-lg">
+                            <div class="space-y-2">
+                                <p class="text-gray-600"><strong class="text-purple-700">全面理解业务：</strong>从四层视角全面理解业务</p>
+                                <p class="text-gray-600"><strong class="text-purple-700">找到瓶颈环节：</strong>识别业务的核心问题</p>
+                                <p class="text-gray-600"><strong class="text-purple-700">优化资源配置：</strong>集中资源优化关键环节</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h3 class="font-bold text-gray-800 mb-3 flex items-center">
+                            <span class="bg-purple-600 text-white rounded-full w-7 h-7 flex items-center justify-center text-sm font-bold mr-2">4</span>
+                            适用场景
+                        </h3>
+                        <div class="pl-9 grid grid-cols-2 gap-3">
+                            <div class="bg-gray-50 p-3 rounded-lg">
+                                <p class="font-medium text-gray-800 text-sm">业务启动期</p>
+                                <p class="text-gray-500 text-xs">全面理解生态</p>
+                            </div>
+                            <div class="bg-gray-50 p-3 rounded-lg">
+                                <p class="font-medium text-gray-800 text-sm">业务诊断</p>
+                                <p class="text-gray-500 text-xs">找到问题根源</p>
+                            </div>
+                            <div class="bg-gray-50 p-3 rounded-lg">
+                                <p class="font-medium text-gray-800 text-sm">战略规划</p>
+                                <p class="text-gray-500 text-xs">制定全链路规划</p>
+                            </div>
+                            <div class="bg-gray-50 p-3 rounded-lg">
+                                <p class="font-medium text-gray-800 text-sm">生态优化</p>
+                                <p class="text-gray-500 text-xs">优化各环节</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-blue-50 p-4 rounded-lg">
+                        <h3 class="font-bold text-blue-700 mb-2">💡 核心洞察</h3>
+                        <p class="text-gray-600">业务是系统，不是孤岛。四层之间相互关联，一个环节出问题，会影响整个生态。找到瓶颈环节，集中资源优化，才能事半功倍。</p>
+                    </div>
+                </div>
+            `,
+            'growth-flywheel': `
+                <div class="border-b-2 border-purple-600 pb-4 mb-6">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-2">增长飞轮与闭环分析</h2>
+                    <p class="text-purple-600 font-medium">识别业务增长飞轮，分析内容生产、流量分发、变现转化的完整闭环</p>
+                </div>
+                
+                <div class="space-y-6">
+                    <div>
+                        <h3 class="font-bold text-gray-800 mb-3 flex items-center">
+                            <span class="bg-purple-600 text-white rounded-full w-7 h-7 flex items-center justify-center text-sm font-bold mr-2">1</span>
+                            核心概念
+                        </h3>
+                        <p class="text-gray-600 pl-9">增长飞轮是业务的"自我强化机制"，内容生产→流量分发→变现转化→再生产，形成闭环。飞轮越转越快，业务越增长。</p>
+                    </div>
+                    
+                    <div>
+                        <h3 class="font-bold text-gray-800 mb-3 flex items-center">
+                            <span class="bg-purple-600 text-white rounded-full w-7 h-7 flex items-center justify-center text-sm font-bold mr-2">2</span>
+                            解决什么问题
+                        </h3>
+                        <div class="pl-9 space-y-2">
+                            <div class="flex items-start">
+                                <span class="text-purple-600 mr-2">🎯</span>
+                                <p class="text-gray-600"><strong class="text-gray-800">增长不持续：</strong>短期有增长，但无法持续</p>
+                            </div>
+                            <div class="flex items-start">
+                                <span class="text-purple-600 mr-2">💡</span>
+                                <p class="text-gray-600"><strong class="text-gray-800">飞轮转不动：</strong>不知道如何加速业务增长</p>
+                            </div>
+                            <div class="flex items-start">
+                                <span class="text-purple-600 mr-2">📊</span>
+                                <p class="text-gray-600"><strong class="text-gray-800">闭环不完整：</strong>内容生产、分发、转化之间没有形成闭环</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h3 class="font-bold text-gray-800 mb-3 flex items-center">
+                            <span class="bg-purple-600 text-white rounded-full w-7 h-7 flex items-center justify-center text-sm font-bold mr-2">3</span>
+                            业务价值
+                        </h3>
+                        <div class="pl-9 bg-purple-50 p-4 rounded-lg">
+                            <div class="space-y-2">
+                                <p class="text-gray-600"><strong class="text-purple-700">加速业务增长：</strong>找到飞轮的关键杠杆点</p>
+                                <p class="text-gray-600"><strong class="text-purple-700">实现可持续增长：</strong>建立自我强化的增长机制</p>
+                                <p class="text-gray-600"><strong class="text-purple-700">优化资源配置：</strong>集中资源加速飞轮</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h3 class="font-bold text-gray-800 mb-3 flex items-center">
+                            <span class="bg-purple-600 text-white rounded-full w-7 h-7 flex items-center justify-center text-sm font-bold mr-2">4</span>
+                            适用场景
+                        </h3>
+                        <div class="pl-9 grid grid-cols-2 gap-3">
+                            <div class="bg-gray-50 p-3 rounded-lg">
+                                <p class="font-medium text-gray-800 text-sm">业务成长期</p>
+                                <p class="text-gray-500 text-xs">识别增长飞轮</p>
+                            </div>
+                            <div class="bg-gray-50 p-3 rounded-lg">
+                                <p class="font-medium text-gray-800 text-sm">战略规划</p>
+                                <p class="text-gray-500 text-xs">制定长期策略</p>
+                            </div>
+                            <div class="bg-gray-50 p-3 rounded-lg">
+                                <p class="font-medium text-gray-800 text-sm">商业模式设计</p>
+                                <p class="text-gray-500 text-xs">设计可持续模式</p>
+                            </div>
+                            <div class="bg-gray-50 p-3 rounded-lg">
+                                <p class="font-medium text-gray-800 text-sm">生态建设</p>
+                                <p class="text-gray-500 text-xs">构建正向循环</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-blue-50 p-4 rounded-lg">
+                        <h3 class="font-bold text-blue-700 mb-2">💡 核心洞察</h3>
+                        <p class="text-gray-600">增长飞轮的核心是"自我强化"，不是"单线驱动"。飞轮要完整，有缺失就无法持续增长。找到杠杆点，集中资源加速，才能让飞轮越转越快。</p>
+                    </div>
+                </div>
+            `,
+            'video-competitor-analysis': `
+                <div class="border-b-2 border-green-600 pb-4 mb-6">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-2">视频号竞品分析框架</h2>
+                    <p class="text-green-600 font-medium">即插即用：复制下面的框架，填入数据即可完成分析</p>
+                </div>
+                
+                <div class="space-y-4">
+                    <div class="bg-gray-900 rounded-lg p-6 text-white">
+                        <div class="flex justify-between items-center mb-4">
+                            <span class="text-gray-400 text-sm">分析框架</span>
+                            <button onclick="copyCode(this)" class="bg-green-600 hover:bg-green-700 px-4 py-2 rounded text-sm font-medium transition">复制框架</button>
+                        </div>
+                        <pre class="text-sm font-mono whitespace-pre-wrap">【竞品分析框架】
+
+一、战略定位对比
+| 平台 | 战略定位 | 核心差异 |
+|------|---------|---------|
+| 抖音 | 电商流量引擎 | 明星=带货流量入口 |
+| 小红书 | 种草转化平台 | 明星=品牌种草达人 |
+| Instagram | 视觉影响力交易市场 | 明星=视觉化品牌代言人 |
+| 视频号 | 【待填写】 | 【待填写】 |
+
+二、商业模式对比
+| 平台 | 收入结构 | 产品化能力 | ROI能力 | 分成机制 |
+|------|---------|-----------|---------|---------|
+| 抖音 | 【待填写】 | 【待填写】 | 【待填写】 | 【待填写】 |
+| 小红书 | 【待填写】 | 【待填写】 | 【待填写】 | 【待填写】 |
+| Instagram | 【待填写】 | 【待填写】 | 【待填写】 | 【待填写】 |
+| 视频号 | 【待填写】 | 【待填写】 | 【待填写】 | 【待填写】 |
+
+三、核心能力对比
+| 平台 | 供给控制 | 分发能力 | 数据能力 | 用户心智 |
+|------|---------|---------|---------|---------|
+| 抖音 | 【待填写】 | 算法推荐60% | 【待填写】 | 【待填写】 |
+| 小红书 | 【待填写】 | 【待填写】 | 【待填写】 | 【待填写】 |
+| Instagram | 【待填写】 | 算法推荐50% | 【待填写】 | 【待填写】 |
+| 视频号 | 【待填写】 | 社交裂变50% | 【待填写】 | 【待填写】 |
+
+四、差异化优势识别
+视频号的唯一差异化优势：【待填写】
+视频号的差异化机会：【待填写】</pre>
+                    </div>
+                    
+                    <div class="bg-blue-50 p-4 rounded-lg">
+                        <h3 class="font-bold text-blue-700 mb-2">💡 使用说明</h3>
+                        <div class="space-y-2">
+                            <p class="text-gray-600 text-sm">1. 复制上面的框架到你的文档中</p>
+                            <p class="text-gray-600 text-sm">2. 填入【待填写】的数据（可参考提示词生成的报告）</p>
+                            <p class="text-gray-600 text-sm">3. 基于填写的数据，输出差异化定位和战略建议</p>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-green-50 p-4 rounded-lg">
+                        <h3 class="font-bold text-green-700 mb-2">📊 推荐提示词</h3>
+                        <p class="text-gray-600 text-sm">【基础调研】视频号竞品深度分析提示词（用于生成数据）</p>
+                    </div>
+                </div>
+            `,
+            'star-interview-generator': `
+                <div class="border-b-2 border-green-600 pb-4 mb-6">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-2">明星访谈提纲</h2>
+                    <p class="text-green-600 font-medium">即插即用：复制下面的提纲，填入艺人信息即可使用</p>
+                </div>
+                
+                <div class="space-y-4">
+                    <div class="bg-gray-900 rounded-lg p-6 text-white">
+                        <div class="flex justify-between items-center mb-4">
+                            <span class="text-gray-400 text-sm">访谈提纲</span>
+                            <button onclick="copyCode(this)" class="bg-green-600 hover:bg-green-700 px-4 py-2 rounded text-sm font-medium transition">复制提纲</button>
+                        </div>
+                        <pre class="text-sm font-mono whitespace-pre-wrap">【明星深度访谈提纲】
+
+访谈对象：{艺人姓名}
+访谈时长：60-90分钟
+访谈目标：
+1. 了解艺人对线上价值的认知
+2. 了解艺人与视频号合作的痛点
+3. 了解艺人对改进的建议
+
+─────────────────────────────
+
+【第一部分：背景与认知】（15分钟）
+1. 请简单介绍一下您的演艺生涯和主要成就
+   - 深挖：您最自豪的成就是什么？
+   
+2. 您对线上娱乐的初步印象是什么？
+   - 深挖：您觉得线上娱乐和线下活动最大的区别是什么？
+   
+3. 您认为线上娱乐对艺人的价值是什么？
+   - 深挖：您觉得线上娱乐能带给艺人什么线下给不了的？
+   
+4. 您之前有没有在线上举办过活动？体验如何？
+   - 深挖：最满意的是什么？最不满意的是什么？
+
+─────────────────────────────
+
+【第二部分：合作体验】（20分钟）
+5. 您与视频号合作的体验如何？
+   - 深挖：最满意的环节是什么？最不满意的环节是什么？
+   
+6. 合作过程中遇到的最大挑战是什么？
+   - 深挖：这个挑战给您带来了什么影响？
+   
+7. 您认为合作模式有什么可以改进的地方？
+   - 深挖：如果让您重新设计合作模式，您会怎么设计？
+   
+8. 您对合作收益满意吗？为什么？
+   - 深挖：您的期望是什么？实际和期望的差距在哪里？
+
+─────────────────────────────
+
+【第三部分：价值认知】（15分钟）
+9. 您认为线上活动与线下活动的价值对比如何？
+   - 深挖：线上活动的价值主要体现在哪些方面？
+   
+10. 您对线上收入的期望是多少？
+    - 深挖：您觉得合理的分成比例是多少？
+    
+11. 您愿意与平台建立长期合作吗？为什么？
+    - 深挖：什么样的合作模式能让您愿意长期合作？
+    
+12. 您认为什么样的合作模式是理想的？
+    - 深挖：这个理想模式和现在的主要区别是什么？
+
+─────────────────────────────
+
+【第四部分：改进建议】（10分钟）
+13. 您对平台有什么改进建议？
+    - 深挖：如果只改一个地方，您最希望改什么？
+    
+14. 您希望平台提供什么支持？
+    - 深挖：这些支持对您来说意味着什么？
+    
+15. 您对未来的合作有什么期待？
+    - 深挖：您希望通过合作实现什么目标？
+
+─────────────────────────────
+
+访谈记录要点：
+- 关键洞察：
+- 主要痛点：
+- 改进建议：
+- 下一步行动：</pre>
+                    </div>
+                    
+                    <div class="bg-blue-50 p-4 rounded-lg">
+                        <h3 class="font-bold text-blue-700 mb-2">💡 使用说明</h3>
+                        <div class="space-y-2">
+                            <p class="text-gray-600 text-sm">1. 复制上面的提纲，替换{艺人姓名}</p>
+                            <p class="text-gray-600 text-sm">2. 根据艺人情况调整问题（增删改）</p>
+                            <p class="text-gray-600 text-sm">3. 访谈时"深挖"部分要追问，不要只听表面</p>
+                            <p class="text-gray-600 text-sm">4. 访谈后立即整理"访谈记录要点"</p>
+                        </div>
+                    </div>
+                </div>
+            `,
+            'video-metrics': `
+                <div class="border-b-2 border-green-600 pb-4 mb-6">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-2">视频号数据指标体系</h2>
+                    <p class="text-green-600 font-medium">即插即用：复制下面的表格，填入实际数据即可使用</p>
+                </div>
+                
+                <div class="space-y-4">
+                    <div class="bg-gray-900 rounded-lg p-6 text-white">
+                        <div class="flex justify-between items-center mb-4">
+                            <span class="text-gray-400 text-sm">数据指标体系</span>
+                            <button onclick="copyCode(this)" class="bg-green-600 hover:bg-green-700 px-4 py-2 rounded text-sm font-medium transition">复制框架</button>
+                        </div>
+                        <pre class="text-sm font-mono whitespace-pre-wrap">【视频号明星业务数据指标体系】
+
+一、流量指标
+| 指标 | 计算方法 | 目标值（3月） | 目标值（6月） | 目标值（12月） | 监控频率 | 责任人 |
+|------|---------|---------------|---------------|----------------|----------|--------|
+| DAU | 【待填写】 | 【待填写】 | 【待填写】 | 【待填写】 | 日 | 【待填写】 |
+| MAU | 【待填写】 | 【待填写】 | 【待填写】 | 【待填写】 | 月 | 【待填写】 |
+| 日均使用时长 | 【待填写】 | 【待填写】 | 【待填写】 | 【待填写】 | 周 | 【待填写】 |
+| 次日留存率 | 【待填写】 | 【待填写】 | 【待填写】 | 【待填写】 | 日 | 【待填写】 |
+| 7日留存率 | 【待填写】 | 【待填写】 | 【待填写】 | 【待填写】 | 周 | 【待填写】 |
+| 30日留存率 | 【待填写】 | 【待填写】 | 【待填写】 | 【待填写】 | 月 | 【待填写】 |
+
+二、内容指标
+| 指标 | 计算方法 | 目标值（3月） | 目标值（6月） | 目标值（12月） | 监控频率 | 责任人 |
+|------|---------|---------------|---------------|----------------|----------|--------|
+| 明星数量 | 【待填写】 | 【待填写】 | 【待填写】 | 【待填写】 | 月 | 【待填写】 |
+| 合作次数 | 【待填写】 | 【待填写】 | 【待填写】 | 【待填写】 | 周 | 【待填写】 |
+| 内容数量 | 【待填写】 | 【待填写】 | 【待填写】 | 【待填写】 | 周 | 【待填写】 |
+| 内容质量评分 | 【待填写】 | 【待填写】 | 【待填写】 | 【待填写】 | 周 | 【待填写】 |
+
+三、商业化指标
+| 指标 | 计算方法 | 目标值（3月） | 目标值（6月） | 目标值（12月） | 监控频率 | 责任人 |
+|------|---------|---------------|---------------|----------------|----------|--------|
+| GMV | 【待填写】 | 【待填写】 | 【待填写】 | 【待填写】 | 月 | 【待填写】 |
+| 客单价 | 【待填写】 | 【待填写】 | 【待填写】 | 【待填写】 | 月 | 【待填写】 |
+| 转化率 | 【待填写】 | 【待填写】 | 【待填写】 | 【待填写】 | 周 | 【待填写】 |
+| 客户数量 | 【待填写】 | 【待填写】 | 【待填写】 | 【待填写】 | 月 | 【待填写】 |
+| 复购率 | 【待填写】 | 【待填写】 | 【待填写】 | 【待填写】 | 月 | 【待填写】 |
+
+四、社交裂变指标
+| 指标 | 计算方法 | 目标值（3月） | 目标值（6月） | 目标值（12月） | 监控频率 | 责任人 |
+|------|---------|---------------|---------------|----------------|----------|--------|
+| 分享率 | 【待填写】 | 【待填写】 | 【待填写】 | 【待填写】 | 周 | 【待填写】 |
+| 裂变系数 | 【待填写】 | 【待填写】 | 【待填写】 | 【待填写】 | 周 | 【待填写】 |
+| 朋友圈曝光量 | 【待填写】 | 【待填写】 | 【待填写】 | 【待填写】 | 日 | 【待填写】 |
+| 话题讨论量 | 【待填写】 | 【待填写】 | 【待填写】 | 【待填写】 | 日 | 【待填写】 |
+
+五、用户满意度指标
+| 指标 | 计算方法 | 目标值（3月） | 目标值（6月） | 目标值（12月） | 监控频率 | 责任人 |
+|------|---------|---------------|---------------|----------------|----------|--------|
+| NPS（净推荐值） | 【待填写】 | 【待填写】 | 【待填写】 | 【待填写】 | 月 | 【待填写】 |
+| 用户满意度 | 【待填写】 | 【待填写】 | 【待填写】 | 【待填写】 | 月 | 【待填写】 |
+| 用户投诉率 | 【待填写】 | 【待填写】 | 【待填写】 | 【待填写】 | 周 | 【待填写】 |
+| 用户流失率 | 【待填写】 | 【待填写】 | 【待填写】 | 【待填写】 | 月 | 【待填写】 |</pre>
+                    </div>
+                    
+                    <div class="bg-blue-50 p-4 rounded-lg">
+                        <h3 class="font-bold text-blue-700 mb-2">💡 使用说明</h3>
+                        <div class="space-y-2">
+                            <p class="text-gray-600 text-sm">1. 复制上面的表格到Excel或Google Sheets</p>
+                            <p class="text-gray-600 text-sm">2. 填入"计算方法"和"责任人"</p>
+                            <p class="text-gray-600 text-sm">3. 根据业务目标设定"目标值"</p>
+                            <p class="text-gray-600 text-sm">4. 定期更新实际数据，对比目标值</p>
+                        </div>
+                    </div>
+                </div>
+            `,
+            'video-swot': `
+                <div class="border-b-2 border-green-600 pb-4 mb-6">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-2">视频号SWOT分析</h2>
+                    <p class="text-green-600 font-medium">即插即用：复制下面的框架，填入分析即可完成SWOT分析</p>
+                </div>
+                
+                <div class="space-y-4">
+                    <div class="bg-gray-900 rounded-lg p-6 text-white">
+                        <div class="flex justify-between items-center mb-4">
+                            <span class="text-gray-400 text-sm">SWOT分析框架</span>
+                            <button onclick="copyCode(this)" class="bg-green-600 hover:bg-green-700 px-4 py-2 rounded text-sm font-medium transition">复制框架</button>
+                        </div>
+                        <pre class="text-sm font-mono whitespace-pre-wrap">【视频号明星业务SWOT分析】
+
+一、优势（Strengths）- 内部因素
+| 优势维度 | 具体描述 | 证据/数据 |
+|---------|---------|----------|
+| 社交裂变能力 | 【待填写：如：社交裂变占比50%，远高于抖音20%】 | 【待填写】 |
+| 微信生态整合 | 【待填写：如：与小程序、公众号、朋友圈深度整合】 | 【待填写】 |
+| 用户基础 | 【待填写：如：微信13亿用户，天然流量池】 | 【待填写】 |
+| 私域流量 | 【待填写：如：支持私域沉淀，长期运营】 | 【待填写】 |
+| 【待填写】 | 【待填写】 | 【待填写】 |
+
+二、劣势（Weaknesses）- 内部因素
+| 劣势维度 | 具体描述 | 证据/数据 |
+|---------|---------|----------|
+| 产品单一 | 【待填写：如：只卖单一冠名，中小品牌投不起】 | 【待填写】 |
+| 商业化不成熟 | 【待填写：如：缺乏产品化能力，无法标准化】 | 【待填写】 |
+| 运营能力弱 | 【待填写：如：缺乏成熟的运营团队】 | 【待填写】 |
+| 数据能力不足 | 【待填写：如：数据追踪和分析能力不完善】 | 【待填写】 |
+| 【待填写】 | 【待填写】 | 【待填写】 |
+
+三、机会（Opportunities）- 外部因素
+| 机会维度 | 具体描述 | 证据/数据 |
+|---------|---------|----------|
+| 市场需求 | 【待填写：如：用户对高质量明星内容需求强烈】 | 【待填写】 |
+| 差异化定位 | 【待填写：如：竞品聚焦电商/种草，视频号可聚焦社交裂变】 | 【待填写】 |
+| 技术创新 | 【待填写：如：AI、VR等新技术带来新机会】 | 【待填写】 |
+| 政策支持 | 【待填写：如：国家对数字内容产业的政策支持】 | 【待填写】 |
+| 【待填写】 | 【待填写】 | 【待填写】 |
+
+四、威胁（Threats）- 外部因素
+| 威胁维度 | 具体描述 | 证据/数据 |
+|---------|---------|----------|
+| 竞品压力 | 【待填写：如：抖音、小红书、Instagram已占据市场】 | 【待填写】 |
+| 监管风险 | 【待填写：如：政策变化可能影响业务】 | 【待填写】 |
+| 用户需求变化 | 【待填写：如：用户需求快速变化，难以把握】 | 【待填写】 |
+| 成本上升 | 【待填写：如：明星费用、运营成本持续上升】 | 【待填写】 |
+| 【待填写】 | 【待填写】 | 【待填写】 |
+
+五、战略建议（基于SWOT矩阵）
+| 战略类型 | 战略描述 | 具体行动 |
+|---------|---------|---------|
+| SO战略（优势+机会） | 【待填写：利用优势抓住机会】 | 【待填写】 |
+| ST战略（优势+威胁） | 【待填写：利用优势应对威胁】 | 【待填写】 |
+| WO战略（劣势+机会） | 【待填写：弥补劣势抓住机会】 | 【待填写】 |
+| WT战略（劣势+威胁） | 【待填写：弥补劣势应对威胁】 | 【待填写】 |</pre>
+                    </div>
+                    
+                    <div class="bg-blue-50 p-4 rounded-lg">
+                        <h3 class="font-bold text-blue-700 mb-2">💡 使用说明</h3>
+                        <div class="space-y-2">
+                            <p class="text-gray-600 text-sm">1. 复制上面的SWOT框架到你的文档</p>
+                            <p class="text-gray-600 text-sm">2. 优势/劣势：分析视频号内部因素（能控制的）</p>
+                            <p class="text-gray-600 text-sm">3. 机会/威胁：分析外部环境因素（不能控制的）</p>
+                            <p class="text-gray-600 text-sm">4. 填入【待填写】的内容，必须基于事实和数据</p>
+                            <p class="text-gray-600 text-sm">5. 基于SWOT矩阵输出战略建议（SO/ST/WO/WT）</p>
+                        </div>
+                    </div>
+                </div>
+            `,
+            'xingzhou-roi': `
+                <div class="border-b-2 border-green-600 pb-4 mb-6">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-2">星舟计划ROI计算</h2>
+                    <p class="text-green-600 font-medium">即插即用：复制下面的表格，填入数据即可计算ROI</p>
+                </div>
+                
+                <div class="space-y-4">
+                    <div class="bg-gray-900 rounded-lg p-6 text-white">
+                        <div class="flex justify-between items-center mb-4">
+                            <span class="text-gray-400 text-sm">ROI计算框架</span>
+                            <button onclick="copyCode(this)" class="bg-green-600 hover:bg-green-700 px-4 py-2 rounded text-sm font-medium transition">复制框架</button>
+                        </div>
+                        <pre class="text-sm font-mono whitespace-pre-wrap">【星舟计划ROI计算】
+
+一、收入（Revenue）
+| 收入来源 | 计算公式 | 实际数值（月） |
+|---------|---------|---------------|
+| 广告收入 | 【待填写：如：曝光量 × CPM】 | 【待填写】 |
+| 电商收入 | 【待填写：如：GMV × 分成比例】 | 【待填写】 |
+| 订阅收入 | 【待填写：如：订阅用户数 × 订阅费】 | 【待填写】 |
+| 其他收入 | 【待填写：如：品牌合作、IP授权等】 | 【待填写】 |
+| ━━━━━━━━━ | ━━━━━━━━━ | ━━━━━━━━━ |
+| 总收入 | 【自动计算】 | 【待填写】 |
+
+二、成本（Cost）
+| 成本类型 | 计算公式 | 实际数值（月） |
+|---------|---------|---------------|
+| 艺人费用 | 【待填写：如：固定费用 + 分成】 | 【待填写】 |
+| 平台运营成本 | 【待填写：如：人员工资、服务器等】 | 【待填写】 |
+| 营销成本 | 【待填写：如：广告投放、活动推广等】 | 【待填写】 |
+| 其他成本 | 【待填写：如：版权、法务等】 | 【待填写】 |
+| ━━━━━━━━━ | ━━━━━━━━━ | ━━━━━━━━━ |
+| 总成本 | 【自动计算】 | 【待填写】 |
+
+三、ROI计算
+| 指标 | 计算公式 | 结果 |
+|------|---------|------|
+| ROI | （总收入 - 总成本）/ 总成本 × 100% | 【待计算】 |
+| 投资回报周期 | 总成本 / 月利润 | 【待计算】月 |
+| 月利润 | 总收入 - 总成本 | 【待计算】 |
+
+四、不同合作模式ROI对比
+| 合作模式 | 艺人费用 | 平台分成 | 总收入 | 总成本 | ROI | 投资回报周期 |
+|---------|---------|---------|-------|-------|-----|----------|
+| 模式1：固定费用 | 【待填写】 | 0% | 【待填写】 | 【待填写】 | 【待计算】 | 【待计算】 |
+| 模式2：费用+分成 | 【待填写】 | 20% | 【待填写】 | 【待填写】 | 【待计算】 | 【待计算】 |
+| 模式3：纯分成 | 0 | 30% | 【待填写】 | 【待填写】 | 【待计算】 | 【待计算】 |
+| 【待填写】 | 【待填写】 | 【待填写】 | 【待填写】 | 【待填写】 | 【待计算】 | 【待计算】 |
+
+五、优化建议
+| 优化方向 | 具体建议 | 预期提升 |
+|---------|---------|---------|
+| 提升收入 | 【待填写：如：增加广告主、提升CPM等】 | 【待填写】 |
+| 降低成本 | 【待填写：如：优化艺人费用、提升运营效率等】 | 【待填写】 |
+| 优化模式 | 【待填写：如：调整分成比例、优化合作模式等】 | 【待填写】 |</pre>
+                    </div>
+                    
+                    <div class="bg-blue-50 p-4 rounded-lg">
+                        <h3 class="font-bold text-blue-700 mb-2">💡 使用说明</h3>
+                        <div class="space-y-2">
+                            <p class="text-gray-600 text-sm">1. 复制上面的表格到Excel或Google Sheets</p>
+                            <p class="text-gray-600 text-sm">2. 填入"计算公式"和"实际数值"</p>
+                            <p class="text-gray-600 text-sm">3. Excel会自动计算ROI、投资回报周期、月利润</p>
+                            <p class="text-gray-600 text-sm">4. 对比不同合作模式的ROI，选择最优方案</p>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-yellow-50 p-4 rounded-lg">
+                        <h3 class="font-bold text-yellow-700 mb-2">⚠️ 注意事项</h3>
+                        <div class="space-y-2">
+                            <p class="text-gray-600 text-sm">• ROI要长期视角，不要只看短期收益</p>
+                            <p class="text-gray-600 text-sm">• 要考虑间接收益（品牌价值、用户增长等）</p>
+                            <p class="text-gray-600 text-sm">• 数据要准确、可追踪、可验证</p>
+                            <p class="text-gray-600 text-sm">• 对比不同合作模式的ROI，选择最优方案</p>
+                        </div>
+                    </div>
+                </div>
+            `,
+            'report-framework': `
+                <div class="border-b-2 border-green-600 pb-4 mb-6">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-2">调研报告框架</h2>
+                    <p class="text-green-600 font-medium">即插即用：复制下面的框架，填入内容即可完成报告</p>
+                </div>
+                
+                <div class="space-y-4">
+                    <div class="bg-gray-900 rounded-lg p-6 text-white">
+                        <div class="flex justify-between items-center mb-4">
+                            <span class="text-gray-400 text-sm">VP级调研报告框架</span>
+                            <button onclick="copyCode(this)" class="bg-green-600 hover:bg-green-700 px-4 py-2 rounded text-sm font-medium transition">复制框架</button>
+                        </div>
+                        <pre class="text-sm font-mono whitespace-pre-wrap">【视频号明星业务战略调研报告】
+
+一、执行摘要（Executive Summary）
+【核心结论1】判断 + 依据 + 含义
+【核心结论2】判断 + 依据 + 含义
+【核心结论3】判断 + 依据 + 含义
+【核心结论4】判断 + 依据 + 含义
+【核心结论5】判断 + 依据 + 含义
+
+二、调研背景与目标
+2.1 调研背景
+【待填写：为什么要做这个调研？解决了什么问题？】
+
+2.2 调研目标
+【待填写：调研要达成什么目标？】
+
+2.3 调研方法
+【待填写：用了什么方法？桌面研究/深度访谈/数据分析等】
+
+三、问题定义
+3.1 核心问题
+【待填写：要解决的核心问题是什么？】
+
+3.2 调研假设
+【待填写：调研的假设是什么？验证了什么假设？】
+
+四、竞品分析
+4.1 抖音明星业务分析
+【待填写：战略定位、商业模式、核心能力】
+
+4.2 小红书明星业务分析
+【待填写：战略定位、商业模式、核心能力】
+
+4.3 Instagram明星业务分析
+【待填写：战略定位、商业模式、核心能力】
+
+4.4 差异化定位建议
+【待填写：视频号应该如何差异化？】
+
+五、供给端分析
+5.1 访谈对象
+【待填写：访谈了哪些艺人？】
+
+5.2 核心发现
+【待填写：艺人的价值认知、合作痛点、改进建议】
+
+5.3 供给端策略建议
+【待填写：基于供给端洞察的策略建议】
+
+六、数据与目标对齐
+6.1 业务数据现状
+【待填写：当前的关键数据指标是什么？】
+
+6.2 业务目标
+【待填写：短期（3月）/中期（6月）/长期（12月）目标】
+
+6.3 数据对齐建议
+【待填写：如何对齐数据指标和业务目标？】
+
+七、核心启示与战略建议
+7.1 战略定位
+【待填写：视频号明星业务应该如何定位？】
+
+7.2 核心优势
+【待填写：视频号的核心优势是什么？】
+
+7.3 用户需求
+【待填写：用户需求如何？如何满足？】
+
+7.4 供给端策略
+【待填写：如何优化供给端合作？】
+
+7.5 商业化策略
+【待填写：如何优化商业化？】
+
+7.6 战略建议
+【短期策略（3-6个月）】
+【待填写：可以直接复制的策略】
+
+【中期策略（6-12个月）】
+【待填写：需要构建能力的策略】
+
+【长期策略（12个月以上）】
+【待填写：长期差异化方向】
+
+八、风险与挑战
+8.1 风险识别
+【待填写：识别的风险有哪些？】
+
+8.2 应对策略
+【待填写：如何应对这些风险？】
+
+九、附录
+9.1 参考资料
+【待填写：引用的资料、报告、数据来源等】
+
+9.2 术语表
+【待填写：专业术语的解释】
+
+9.3 访谈记录
+【待填写：访谈的详细记录】</pre>
+                    </div>
+                    
+                    <div class="bg-blue-50 p-4 rounded-lg">
+                        <h3 class="font-bold text-blue-700 mb-2">💡 使用说明</h3>
+                        <div class="space-y-2">
+                            <p class="text-gray-600 text-sm">1. 复制上面的框架到Word或Google Docs</p>
+                            <p class="text-gray-600 text-sm">2. 填入【待填写】的内容</p>
+                            <p class="text-gray-600 text-sm">3. 遵循VP级颗粒度标准：数据导向、结论先行、极高信息密度</p>
+                            <p class="text-gray-600 text-sm">4. 用表格、图表展示数据，避免长篇大论</p>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-green-50 p-4 rounded-lg">
+                        <h3 class="font-bold text-green-700 mb-2">📊 VP级质量标准</h3>
+                        <div class="space-y-2">
+                            <p class="text-gray-600 text-sm">✅ 数据导向：每个观点都要有数据支撑，标注来源和假设</p>
+                            <p class="text-gray-600 text-sm">✅ 结论先行：每个模块开头用"核心发现/核心结论"总结</p>
+                            <p class="text-gray-600 text-sm">✅ 极高信息密度：用表格、图表替代文字，避免车轱辘话</p>
+                            <p class="text-gray-600 text-sm">✅ 战略咨询视角：站在VP/McKinsey视角，给出可执行建议</p>
+                            <p class="text-gray-600 text-sm">✅ 反常识洞察：每章末尾加【核心洞察】，总结最本质的商业逻辑</p>
+                        </div>
+                    </div>
+                </div>
+            `
+        };
+
+        // Show modal
+        function showModal(type) {
+            const modal = document.getElementById('modal');
+            const modalBody = document.getElementById('modal-body');
+            
+            if (modalContent[type]) {
+                modalBody.innerHTML = modalContent[type];
+            } else {
+                modalBody.innerHTML = `
+                    <h2 class="text-2xl font-bold text-gray-800 mb-4">${type}</h2>
+                    <p class="text-gray-600">此功能正在开发中，敬请期待！</p>
+                    <p class="text-gray-500 text-sm mt-4">您现在可以：</p>
+                    <ul class="list-disc list-inside text-gray-600 text-sm mt-2">
+                        <li>查看详细的使用说明</li>
+                        <li>复制提示词到AI工具中使用</li>
+                        <li>参考已有的案例报告</li>
+                    </ul>
+                `;
+            }
+            
+            modal.style.display = 'block';
+        }
+
+        // Close modal
+        document.querySelector('.close').onclick = function() {
+            document.getElementById('modal').style.display = 'none';
+        }
+
+        window.onclick = function(event) {
+            const modal = document.getElementById('modal');
+            if (event.target == modal) {
+                modal.style.display = 'none';
+            }
+        }
+
+        // Copy prompt
+        function copyPrompt(button) {
+            const promptCard = button.closest('.prompt-card');
+            const codeBlock = promptCard.querySelector('code');
+            navigator.clipboard.writeText(codeBlock.textContent);
+            
+            const originalText = button.textContent;
+            button.textContent = '已复制';
+            setTimeout(() => {
+                button.textContent = originalText;
+            }, 2000);
+        }
+
+        // Copy code
+        function copyCode(button) {
+            const codeBlock = button.parentElement.querySelector('code');
+            navigator.clipboard.writeText(codeBlock.textContent);
+            
+            const originalText = button.textContent;
+            button.textContent = '已复制';
+            setTimeout(() => {
+                button.textContent = originalText;
+            }, 2000);
+        }
+
+        // Show tab
+        function showTab(category, section) {
+            // Update tab buttons
+            const buttons = document.querySelectorAll(`[onclick^="showTab('${category}'"]`);
+            buttons.forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            // Update content
+            const items = document.querySelectorAll(`#${section}-content > div`);
+            items.forEach(item => {
+                if (category === 'all' || item.dataset.category === category || item.dataset.category === 'all') {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        }
+
+        // Filter tools
+        function filterTools(scenario) {
+            const items = document.querySelectorAll('#tools-content > div');
+            items.forEach(item => {
+                if (scenario === 'all' || item.dataset.scenario === scenario) {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        }
+
+        // Filter prompts
+        function filterPrompts(category) {
+            const items = document.querySelectorAll('#prompts-content > div');
+            items.forEach(item => {
+                if (category === 'all' || item.dataset.category === category) {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        }
+
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
